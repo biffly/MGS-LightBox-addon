@@ -14,6 +14,8 @@ Crea Lightbox con informacion de la imagen
 
 
 ## Change Log
+- ###### Version 0.2
+  - Se agrego la opción de galería
 - ###### Version 0.1
   - Lanzamiento
 
