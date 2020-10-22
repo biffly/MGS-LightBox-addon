@@ -3,7 +3,7 @@
 Plugin Name: MGS LightBox AddOn
 Plugin URI: https://github.com/biffly/MGS-LightBox-addon/
 Description: Crea Lightbox con informacion de la imagen
-Version: 0.2
+Version: 0.3
 Author: Marcelo Scenna
 Author URI: http://www.marceloscenna.com.ar
 Text Domain: mgs-lightbox-addon
@@ -12,7 +12,7 @@ Text Domain: mgs-lightbox-addon
 if( !defined('ABSPATH') ){ exit; }
 error_reporting(E_ALL & ~E_NOTICE);
 
-if( !defined('MGS_LIGHTBOX_ADDON_VERSION') )             	define('MGS_LIGHTBOX_ADDON_VERSION', '0.2');
+if( !defined('MGS_LIGHTBOX_ADDON_VERSION') )             	define('MGS_LIGHTBOX_ADDON_VERSION', '0.3');
 if( !defined('MGS_LIGHTBOX_ADDON_BASENAME') )				define('MGS_LIGHTBOX_ADDON_BASENAME', plugin_basename(__FILE__));
 if( !defined('MGS_LIGHTBOX_ADDON_PLUGIN_DIR') ) 			define('MGS_LIGHTBOX_ADDON_PLUGIN_DIR', plugin_dir_path(__FILE__));
 if( !defined('MGS_LIGHTBOX_ADDON_PLUGIN_DIR_URL') )			define('MGS_LIGHTBOX_ADDON_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));

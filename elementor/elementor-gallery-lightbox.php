@@ -56,6 +56,18 @@ class MGS_Gallery_Ligtbox_Elementor extends \Elementor\Widget_Base {
 			]
 		);
 		$this->add_control(
+			'theme',
+			[
+				'label' => 'Tema/style',
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => '',
+				'options' => [
+					''			=> 'Sin estilo',
+					'basico'	=> 'Basico',
+				],
+			]
+		);
+		$this->add_control(
 			'layout',
 			[
 				'label' => 'Diseño',
@@ -114,7 +126,7 @@ class MGS_Gallery_Ligtbox_Elementor extends \Elementor\Widget_Base {
 			$array_images[] = $v['id'];
 		}
 		$array_images_raw = implode(',', $array_images);
-		echo do_shortcode('[mgs_gallery_lightbox_addon img_id="'.$array_images_raw.'" layout="'.$settings['layout'].'" title="'.$settings['title'].'" desc="'.$settings['desc'].'" class="for-elementor '.$settings['class'].'" cols="'.$settings['cols'].'" /]');
+		echo do_shortcode('[mgs_gallery_lightbox_addon img_id="'.$array_images_raw.'" layout="'.$settings['layout'].'" title="'.$settings['title'].'" desc="'.$settings['desc'].'" class="for-elementor '.$settings['class'].'" cols="'.$settings['cols'].' theme-'.$settings['theme'].'" theme="'.$settings['theme'].'" /]');
     }
     
 	protected function _content_template(){}

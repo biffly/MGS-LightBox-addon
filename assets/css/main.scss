@@ -23,6 +23,31 @@
 			}
 		}
 	}
+	.fancybox-close-small{width: 44px;}
+	
+	
+	/*	theme basico: */
+	&.theme-basico{
+		padding: 0;
+		max-width: 800px;
+		background-color: rgba(0,0,0,0.3);
+		.mgs-lightbox-grid{
+			display: block;
+			.mgs-lightbox-content{
+				padding: 0 15px;
+				color: #fff;
+			}
+		}
+		.fancybox-close-small{
+			border: none;
+			background-color: #fff;
+			svg{
+				path{
+					fill: #000;
+				}
+			}
+		}
+	}
 }
 
 .mgs-gallery-lightbox{
@@ -38,5 +63,9 @@
 		&.columns-8{grid-template-columns: repeat(8, 1fr);}
 		&.columns-9{grid-template-columns: repeat(9, 1fr);}
 		&.columns-10{grid-template-columns: repeat(10, 1fr);}
+		
+		&.theme-basico{
+			grid-gap: 15px;
+		}
 	}
 }

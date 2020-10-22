@@ -94,7 +94,7 @@ if( !class_exists('MGS_LightBox_AddOn') ){
 					$uniqid_single = uniqid();
 					$out .= '
 						<a data-fancybox="'.$gallery_id.'" data-src="#mgs-lightbox-'.$uniqid_single.'" href="javascript:;" title="'.$title.'"  class="mgs-gallery-lightbox-item">'.$img.'</a>
-						<div class="mgs-lightbox-warpper" id="mgs-lightbox-'.$uniqid_single.'" style="display: none;">
+						<div class="mgs-lightbox-warpper theme-'.$attr['theme'].'" id="mgs-lightbox-'.$uniqid_single.'" style="display: none;">
 							<div class="mgs-lightbox-grid">
 								<div class="mgs-lightbox-img">
 									<div class="mgs-lightbox-img-warpper">'.$img_full.'</div>
