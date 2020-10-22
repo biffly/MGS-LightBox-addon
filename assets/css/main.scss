@@ -24,3 +24,19 @@
 		}
 	}
 }
+
+.mgs-gallery-lightbox{
+	.mgs-gallery-lightbox-warpper{
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		&.columns-2{grid-template-columns: repeat(2, 1fr);}
+		&.columns-3{grid-template-columns: repeat(3, 1fr);}
+		&.columns-4{grid-template-columns: repeat(4, 1fr);}
+		&.columns-5{grid-template-columns: repeat(5, 1fr);}
+		&.columns-6{grid-template-columns: repeat(6, 1fr);}
+		&.columns-7{grid-template-columns: repeat(7, 1fr);}
+		&.columns-8{grid-template-columns: repeat(8, 1fr);}
+		&.columns-9{grid-template-columns: repeat(9, 1fr);}
+		&.columns-10{grid-template-columns: repeat(10, 1fr);}
+	}
+}

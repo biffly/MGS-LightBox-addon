@@ -33,6 +33,7 @@ if( !class_exists('MGS_LightBox_AddOn') ){
 			
 			add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
 			add_shortcode('mgs_lightbox_addon', [$this, 'mgs_lightbox_addon_build']);
+			add_shortcode('mgs_gallery_lightbox_addon', [$this, 'mgs_gallery_lightbox_addon_build']);
 		}
 		
 		public function on_load(){
@@ -48,6 +49,119 @@ if( !class_exists('MGS_LightBox_AddOn') ){
             ];
 		}
 		
+		public function mgs_gallery_lightbox_addon_build($attr){
+			$out = '';
+			if( !isset($attr['img_id']) && !isset($attr['avada_img']) ) return false;
+			
+			$imgs_array = explode(',', $attr['img_id']);
+			$attr['size'] = ( $attr['size'] ) ? $attr['size'] : 'medium';
+			
+			$uniqid = uniqid();
+			$sc_id = 'mgs-gallery-lightbox-addon-sc-'.$uniqid;
+			$gallery_id = 'mgs-gallery-lightbox-'.$uniqid;
+			$out = '
+				<div class="mgs-gallery-lightbox">
+					<div id="'.$sc_id.'" class="mgs-gallery-lightbox-warpper columns-'.$attr['cols'].' '.$attr['class'].'">
+			';
+			foreach( $imgs_array as $_id_img ){
+				$title = get_the_title($_id_img);
+				$all_img_info = $this->get_attachment_info($_id_img);
+				$img = wp_get_attachment_image(
+					$_id_img, 
+					$attr['size'], 
+					false, 
+					[
+						'class'	=>'mgs-lightbox-img',
+						'alt'	=> $title,
+					]
+				);
+
+				$img_full_url = wp_get_attachment_url($_id_img);
+				$img_full = wp_get_attachment_image(
+					$_id_img, 
+					'', 
+					false, 
+					[
+						'class'	=>'mgs-lightbox-img-full ',
+						'alt'	=> $title,
+					]
+				);
+				if( $attr['layout']=='image' ){
+					$out .= '
+						<a data-fancybox="'.$gallery_id.'" href="'.$img_full_url.'" title="'.$title.'" class="mgs-gallery-lightbox-item">'.$img.'</a>
+					';
+				}elseif( $attr['layout']=='image_text' ){
+					$uniqid_single = uniqid();
+					$out .= '
+						<a data-fancybox="'.$gallery_id.'" data-src="#mgs-lightbox-'.$uniqid_single.'" href="javascript:;" title="'.$title.'"  class="mgs-gallery-lightbox-item">'.$img.'</a>
+						<div class="mgs-lightbox-warpper" id="mgs-lightbox-'.$uniqid_single.'" style="display: none;">
+							<div class="mgs-lightbox-grid">
+								<div class="mgs-lightbox-img">
+									<div class="mgs-lightbox-img-warpper">'.$img_full.'</div>
+								</div>
+								<div class="mgs-lightbox-content">
+									<div class="mgs-lightbox-content-warper">
+					';
+					if( $attr['title']=='true' ){
+						$out .= '		<h3 class="mgs-lightbox-content-title">'.$title.'</h3>';
+					}
+					if( $attr['desc']=='plano' ){
+						$out.= '		<span class="mgs-lightbox-content-desc plano">'.$all_img_info['desc'].'</span>';
+					}if( $attr['desc']=='html' ){
+						$out.= '		<span class="mgs-lightbox-content-desc html">'.$all_img_info['desc_html'].'</span>';
+					}
+					$out .= '
+
+									</div>
+								</div>
+							</div>
+						</div>
+					';
+				}elseif( $attr['layout']=='text' ){
+					$uniqid_single = uniqid();
+					$out .= '
+						<a data-fancybox="'.$gallery_id.'" data-src="#mgs-lightbox-'.$uniqid_single.'" href="javascript:;" title="'.$title.'"  class="mgs-gallery-lightbox-item">'.$img.'</a>
+						<div class="mgs-lightbox-warpper" id="mgs-lightbox-'.$uniqid_single.'" style="display: none;">
+							<div class="mgs-lightbox-content">
+								<div class="mgs-lightbox-content-warper">
+					';
+					if( $attr['title']=='true' ){
+						$out .= '	<h3 class="mgs-lightbox-content-title">'.$title.'</h3>';
+					}
+					if( $attr['desc']=='plano' ){
+						$out.= '	<span class="mgs-lightbox-content-desc plano">'.$all_img_info['desc'].'</span>';
+					}if( $attr['desc']=='html' ){
+						$out.= '	<span class="mgs-lightbox-content-desc html">'.$all_img_info['desc_html'].'</span>';
+					}
+					$out .= '
+								</div>
+							</div>
+						</div>
+					';
+			}
+				
+			}
+			$out .= '
+					</div>
+				</div>
+			';
+			
+			return $out;
+			/*
+			<div class="elementor-image-gallery">
+				<div id="gallery-1" class="gallery galleryid-58 gallery-columns-4 gallery-size-thumbnail">
+					<figure class="gallery-item">
+						<div class="gallery-icon landscape">
+							<a data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="ee6a325" data-elementor-lightbox-title="h3-slide-2" href="http://mgs/Avada/wp-content/uploads/2020/09/h3-slide-2.jpg">
+								<img width="150" height="150" src="http://mgs/Avada/wp-content/uploads/2020/09/h3-slide-2-150x150.jpg" class="attachment-thumbnail size-thumbnail" alt="" loading="lazy">
+							</a>
+						</div>
+					</figure>
+				</div>
+			</div>
+			*/
+		}
+		
 		public function mgs_lightbox_addon_build($attr){
 			$out = '';
 			
@@ -60,9 +174,6 @@ if( !class_exists('MGS_LightBox_AddOn') ){
 			$sc_id = 'mgs-lightbox-addon-sc-'.$uniqid;
 			$out .= '<span id="'.$sc_id.'" class="mgs-lightbox-addon-sc '.$attr['class'].'">';
 			//$out .= '<pre>'.print_r($attr, true).'</pre>';
-			
-			
-			
 			
 			$title = get_the_title($attr['img_id']);
 			$all_img_info = $this->get_attachment_info($attr['img_id']);
@@ -289,7 +400,13 @@ function mgs_lightbox_addon_init_widgets_elementor(){
 			'name'      => 'Lightbox',
 			'ico'       => 'fa fa-bars',
 			'ver'       => '1.0.0'
-		],	
+		],
+		'MGS_Gallery_Ligtbox_Elementor'   => [
+			'file'      => 'elementor-gallery-lightbox.php',
+			'name'      => 'Lightbox Gallery',
+			'ico'       => 'fa fa-bars',
+			'ver'       => '1.0.0'
+		],
 	];
 	require_once(MGS_LIGHTBOX_ADDON_PLUGIN_DIR.'elementor/elementor.php');
 	foreach( $elementor_elements as $k=>$v ){
